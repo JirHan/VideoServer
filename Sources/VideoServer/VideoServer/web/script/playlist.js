@@ -10,6 +10,7 @@ Vsrv.Playlist = (function () {
             "bPaginate": false,
             "bInfo": false,
             "scrollY": "500px",
+            "bFilter": false
         });
         $('#tblPlaylist tbody').on('click', 'tr', function () {
             playItem(tblPlaylist.row(this).data());

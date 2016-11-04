@@ -6,6 +6,20 @@ Vsrv.Browser = (function () {
     var listUrl = "list?path=";
     var tblBrowser;
 
+    var updateHash = function () {
+        window.location.hash = JSON.stringify(CurrDirChain);
+    }
+
+    var processHash = function () {
+        if (window.location.hash != "") {
+            CurrDirChain = JSON.parse(window.location.hash.substring(1));
+        } else {
+            CurrDirChain = [];
+        }
+        $("#path").html("./" + getCurrentDir());
+        tblBrowser.ajax.url(listUrl + getCurrentDir()).load();
+    }
+
     var init = function () {
         tblBrowser = $('#tblBrowser').DataTable({
             "bPaginate": false,
@@ -22,37 +36,34 @@ Vsrv.Browser = (function () {
                 { "data": "name" }
             ],
             "scrollY": "500px",
-            "fnDrawCallback": function () {
-                var folderUp = '<tr><td class="folderUp"></td><td class="folderUp">..</td></tr>';
-                $('#tblBrowser tbody').prepend(folderUp);
-            },
             "language": {
                 "emptyTable": "No Files"
             }
         });
         $('#tblBrowser tbody').on('click', 'td', function () {
-            if (this.className === "folderUp") {
-                folderUp();
-            } else if(this.cellIndex === 1){
+            if(this.cellIndex === 1){
                 var item = tblBrowser.row(this).data();
                 itemClick(item.type, item.name);
             }
         });
+        window.onhashchange = function ()
+        {
+            processHash();
+        };
+        processHash();
     }
 
     var folderUp = function () {
         if (CurrDirChain.length > 0) {
             CurrDirChain.pop();
-            $("#path").html("./" + getCurrentDir());
         }
-        tblBrowser.ajax.url(listUrl + getCurrentDir()).load();
+        updateHash();
     }
 
     var itemClick = function (type, name) {
         if (type === "D") {
             CurrDirChain.push(name);
-            $("#path").html("./" + getCurrentDir());
-            tblBrowser.ajax.url(listUrl + getCurrentDir()).load();
+            updateHash();
         } else if (type === "F" && name.endsWith("mp4")) {
             Vsrv.Playlist.addItem(name, getCurrentDir() + name);
         } else {

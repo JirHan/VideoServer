@@ -3,13 +3,28 @@ __mod_dir__ = os.path.abspath(os.path.dirname(__file__))
 
 import cherrypy
 import ujson as json
+import sys
+import mimetypes
 
 #contentRoot = "F:\\Fotky"
 #contentRoot = "E:\\mp4\\"
-contentRoot = "C:\\VideoServer\\Data"
+contentRoot = "C:\Fun"
+port = 8080
 
 class Content():
     pass
+
+class Stream():
+    exposed = True
+
+    def GET(self, path=None):
+        path = os.path.join(contentRoot, path)
+        print(path)
+        if not os.path.exists(path):
+            return "file not found!"
+
+        size = os.path.getsize(video)
+        mime = mimetypes.guess_type(video)[0]
 
 class Web():
     pass
@@ -53,18 +68,22 @@ class VideoServer:
 
         cherrypy.config.update({
             'server.socket_host': '0.0.0.0',
-            'server.socket_port': 8080, 
+            'server.socket_port': port, 
 
             'engine.autoreload.on': False,
 
-            'tools.encode.on': True,
-            'tools.decode.on': True,
-            'tools.encode.encoding': 'utf-8',
-            'tools.decode.encoding': 'utf-8',
             'log.screen': True 
         })
     
-        cherrypy.tree.mount(Content(), '/content',
+        cherrypy.tree.mount(Stream(), '/stream',
+            {'/':
+                {
+                    'request.dispatch': cherrypy.dispatch.MethodDispatcher()
+                }
+            }
+        )
+    
+        cherrypy.tree.mount(Stream(), '/content',
             {'/':
                 {
                     'tools.staticdir.on':   True, 
@@ -99,6 +118,13 @@ class VideoServer:
 
 
 if __name__ == '__main__':
+    if len(sys.argv) >= 2:
+        contentRoot = sys.argv[1]
+    if len(sys.argv) >= 3:
+        port = int(sys.argv[2])
+
+    print("Serving videos from {0} on port {1}".format(contentRoot, port))
+
     VideoServer.start()
     
 

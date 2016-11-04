@@ -5,12 +5,13 @@
     <meta charset="utf-8" />
     <title>VideoServer 0.1</title>
 
-    <link rel="stylesheet" type="text/css" href="lib/datatables/datatables.min.css"/>
+    <link type="text/css" rel="stylesheet" href="lib/datatables/datatables.min.css" />
+    <link type="text/css" rel="stylesheet" href="./lib/awesome/css/font-awesome.min.css" />
 
     <script type="text/javascript" charset="utf8" src="lib/jq/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="lib/datatables/datatables.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="style/main.css"/>
+    <link type="text/css" rel="stylesheet" href="style/main.css" />
 
     <script type="text/javascript" src="./script/rest.js"></script>
     <script type="text/javascript" src="./script/browser.js"></script>
@@ -28,6 +29,7 @@
 
 </head>
 <body>
+    <div id="back"><i class='fa fa-caret-square-o-left fa-2x' onclick='Vsrv.Browser.folderUp()'></i></div>
     <div id="path">./</div>
     <div id="browser">
         <table id="tblBrowser" class="display" cellspacing="0">

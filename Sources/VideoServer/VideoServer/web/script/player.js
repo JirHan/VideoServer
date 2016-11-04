@@ -8,6 +8,7 @@ Vsrv.Player = (function () {
         PLAYING: 2,
         PAUSED: 3
     };
+    //var contentUrl = "content?path=";
     var contentUrl = "content/";
     var currStatus = Status.NONE;
 

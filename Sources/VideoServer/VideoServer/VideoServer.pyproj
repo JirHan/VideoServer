@@ -30,6 +30,11 @@
   <ItemGroup>
     <Folder Include="web\" />
     <Folder Include="web\lib\" />
+    <Folder Include="web\lib\awesome\" />
+    <Folder Include="web\lib\awesome\css\" />
+    <Folder Include="web\lib\awesome\fonts\" />
+    <Folder Include="web\lib\awesome\less\" />
+    <Folder Include="web\lib\awesome\scss\" />
     <Folder Include="web\lib\datatables\" />
     <Folder Include="web\lib\datatables\DataTables-1.10.11\" />
     <Folder Include="web\lib\datatables\DataTables-1.10.11\css\" />
@@ -41,6 +46,40 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="web\index.html" />
+    <Content Include="web\lib\awesome\css\font-awesome.css" />
+    <Content Include="web\lib\awesome\css\font-awesome.min.css" />
+    <Content Include="web\lib\awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="web\lib\awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="web\lib\awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="web\lib\awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="web\lib\awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="web\lib\awesome\fonts\FontAwesome.otf" />
+    <Content Include="web\lib\awesome\less\animated.less" />
+    <Content Include="web\lib\awesome\less\bordered-pulled.less" />
+    <Content Include="web\lib\awesome\less\core.less" />
+    <Content Include="web\lib\awesome\less\fixed-width.less" />
+    <Content Include="web\lib\awesome\less\font-awesome.less" />
+    <Content Include="web\lib\awesome\less\icons.less" />
+    <Content Include="web\lib\awesome\less\larger.less" />
+    <Content Include="web\lib\awesome\less\list.less" />
+    <Content Include="web\lib\awesome\less\mixins.less" />
+    <Content Include="web\lib\awesome\less\path.less" />
+    <Content Include="web\lib\awesome\less\rotated-flipped.less" />
+    <Content Include="web\lib\awesome\less\stacked.less" />
+    <Content Include="web\lib\awesome\less\variables.less" />
+    <Content Include="web\lib\awesome\scss\font-awesome.scss" />
+    <Content Include="web\lib\awesome\scss\_animated.scss" />
+    <Content Include="web\lib\awesome\scss\_bordered-pulled.scss" />
+    <Content Include="web\lib\awesome\scss\_core.scss" />
+    <Content Include="web\lib\awesome\scss\_fixed-width.scss" />
+    <Content Include="web\lib\awesome\scss\_icons.scss" />
+    <Content Include="web\lib\awesome\scss\_larger.scss" />
+    <Content Include="web\lib\awesome\scss\_list.scss" />
+    <Content Include="web\lib\awesome\scss\_mixins.scss" />
+    <Content Include="web\lib\awesome\scss\_path.scss" />
+    <Content Include="web\lib\awesome\scss\_rotated-flipped.scss" />
+    <Content Include="web\lib\awesome\scss\_stacked.scss" />
+    <Content Include="web\lib\awesome\scss\_variables.scss" />
     <Content Include="web\lib\datatables\DataTables-1.10.11\css\dataTables.bootstrap.css" />
     <Content Include="web\lib\datatables\DataTables-1.10.11\css\dataTables.bootstrap.min.css" />
     <Content Include="web\lib\datatables\DataTables-1.10.11\css\dataTables.foundation.css" />
