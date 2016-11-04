@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>VideoServer 0.1</title>
+
+    <link rel="stylesheet" type="text/css" href="lib/datatables/datatables.min.css"/>
+
+    <script type="text/javascript" charset="utf8" src="lib/jq/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="lib/datatables/datatables.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style/main.css"/>
+
+    <script type="text/javascript" src="./script/rest.js"></script>
+    <script type="text/javascript" src="./script/browser.js"></script>
+    <script type="text/javascript" src="./script/playlist.js"></script>
+    <script type="text/javascript" src="./script/player.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            Vsrv.Browser.init();
+            Vsrv.Playlist.init();
+        });
+
+    </script>
+
+</head>
+<body>
+    <div id="path">./</div>
+    <div id="browser">
+        <table id="tblBrowser" class="display" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div id="video">
+        <video id="vidVideo"
+               controls width="100%"
+               onended="Vsrv.Player.videoEnded()" 
+               onplay="Vsrv.Player.videoStarted()">
+        </video>
+    </div>
+    <div id="playlist">
+        <table id="tblPlaylist" class="display" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</body>
+</html>
