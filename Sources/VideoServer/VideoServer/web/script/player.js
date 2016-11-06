@@ -8,12 +8,13 @@ Vsrv.Player = (function () {
         PLAYING: 2,
         PAUSED: 3
     };
-    //var contentUrl = "content?path=";
-    var contentUrl = "content/";
+    //var contentUrl = "stream?path=";
+    var contentUrl = "static/";
+    var contentUrl = "static?path=";
     var currStatus = Status.NONE;
 
     var videoEnded = function () {
-        var item = Vsrv.Playlist.getItemPath();
+        var item = Vsrv.Playlist.getItemPath(1);
         if (item) {
             setVideoSrc(item);
             if (currStatus === Status.PLAYING) {
@@ -31,7 +32,7 @@ Vsrv.Player = (function () {
     }
 
     var fileAdded = function () {
-        var item = Vsrv.Playlist.getItemPath();
+        var item = Vsrv.Playlist.getItemPath(0);
         setVideoSrc(item);
     };
 
@@ -42,6 +43,7 @@ Vsrv.Player = (function () {
             if (currStatus === Status.PLAYING) {
                 document.getElementById("vidVideo").play();
             }
+            console.log("src: " + path);
             return true;
         } else {
             return false;

@@ -5,26 +5,24 @@ import cherrypy
 import ujson as json
 import sys
 import mimetypes
+from cherrypy.lib.static import serve_file
 
 #contentRoot = "F:\\Fotky"
 #contentRoot = "E:\\mp4\\"
-contentRoot = "C:\Fun"
+contentRoot = "D:\Fun"
 port = 8080
 
-class Content():
-    pass
-
-class Stream():
+class Static():
     exposed = True
 
-    def GET(self, path=None):
+    def GET(self, path):
         path = os.path.join(contentRoot, path)
         print(path)
+        
         if not os.path.exists(path):
             return "file not found!"
 
-        size = os.path.getsize(video)
-        mime = mimetypes.guess_type(video)[0]
+        return serve_file(path)
 
 class Web():
     pass
@@ -74,21 +72,11 @@ class VideoServer:
 
             'log.screen': True 
         })
-    
-        cherrypy.tree.mount(Stream(), '/stream',
+
+        cherrypy.tree.mount(Static(), '/static',
             {'/':
                 {
-                    'request.dispatch': cherrypy.dispatch.MethodDispatcher()
-                }
-            }
-        )
-    
-        cherrypy.tree.mount(Stream(), '/content',
-            {'/':
-                {
-                    'tools.staticdir.on':   True, 
-                    'tools.staticdir.root': contentRoot,
-                    'tools.staticdir.dir':  '',
+                    'request.dispatch': cherrypy.dispatch.MethodDispatcher(),
                 }
             }
         )

@@ -35,3 +35,9 @@
     float:left;
     cursor:pointer;
 }
+
+.plControl {
+    cursor:pointer;
+    width: 18%;
+    text-align:center;
+}

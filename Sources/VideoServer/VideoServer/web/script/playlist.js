@@ -10,7 +10,10 @@ Vsrv.Playlist = (function () {
             "bPaginate": false,
             "bInfo": false,
             "scrollY": "500px",
-            "bFilter": false
+            "bFilter": false,
+            "bSort" : false,
+            "select": true,
+            "rowReorder": true,
         });
         $('#tblPlaylist tbody').on('click', 'tr', function () {
             playItem(tblPlaylist.row(this).data());
@@ -36,12 +39,18 @@ Vsrv.Playlist = (function () {
         }
     }
 
-    var getItemPath = function() {
+    var getItemPath = function(idxOffset) {
         var rws = tblPlaylist.rows().data();
-        if (currIdx < rws.length) {
-            return rws[currIdx++][1];
-        } else {
+        if((currIdx + idxOffset) < 0 || (currIdx + idxOffset) >= rws.length){
             return null;
+        } else {
+            currIdx += idxOffset;
+            tblPlaylist.rows().every(function(idx, tableLoop, rowLoop){
+                if(idx == currIdx){
+                    $(this).toggleClass('row_selected');
+                }
+            });
+            return rws[currIdx][1];
         }
     }
 
