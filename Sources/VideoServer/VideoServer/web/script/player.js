@@ -14,35 +14,39 @@ Vsrv.Player = (function () {
     var currStatus = Status.NONE;
 
     var videoEnded = function () {
-        var item = Vsrv.Playlist.getItemPath(1);
-        if (item) {
-            setVideoSrc(item);
-            if (currStatus === Status.PLAYING) {
-                document.getElementById("vidVideo").play();
-            }
+        if (Vsrv.Playlist.nextVideo()) {
+            currStatus = Status.PLAYING;
+            play();
+        } else {
+            currStatus = Status.PAUSED;
         }
     };
 
     var videoStarted = function () {
         currStatus = Status.PLAYING;
+        $("#plcPause").show();
+        $("#plcPlay").hide();
     };
 
     var videoPaused = function () {
         currStatus = Status.PAUSED;
+        $("#plcPause").hide();
+        $("#plcPlay").show();
     }
 
-    var fileAdded = function () {
-        var item = Vsrv.Playlist.getItemPath(0);
-        setVideoSrc(item);
-    };
+    var play = function () {
+        currStatus = Status.PLAYING;
+        document.getElementById("vidVideo").play();
+    }
+
+    var pause = function () {
+        currStatus = Status.PAUSED;
+        document.getElementById("vidVideo").pause();
+    }
 
     var setVideoSrc = function (path) {
         if (path != null) {
             $("#vidVideo").attr("src", contentUrl + path);
-            Vsrv.Playlist.setPlaying(path);
-            if (currStatus === Status.PLAYING) {
-                document.getElementById("vidVideo").play();
-            }
             console.log("src: " + path);
             return true;
         } else {
@@ -51,10 +55,11 @@ Vsrv.Player = (function () {
     };
 
     return {
+        play: play,
+        pause: pause,
         videoStarted: videoStarted,
         videoPaused: videoPaused,
         videoEnded: videoEnded,
-        fileAdded: fileAdded,
         setVideoSrc: setVideoSrc
     };
 

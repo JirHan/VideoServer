@@ -3,7 +3,18 @@ window.Vsrv = window.Vsrv || {};
 Vsrv.Playlist = (function () {
 
     var tblPlaylist;
-    var currIdx = 0;
+    var currentVideo = "";
+
+    var updatePlayingSelection = function () {
+        $("#tblPlaylist tr").removeClass("rowSelected");
+        var rws = tblPlaylist.rows().data();
+        for (i in rws) {
+            if (rws[i][1] === currentVideo) {
+                $(tblPlaylist.row(i).node()).addClass("rowSelected");
+                return;
+            }
+        }
+    }
 
     var init = function () {
         tblPlaylist = $('#tblPlaylist').DataTable({
@@ -11,17 +22,16 @@ Vsrv.Playlist = (function () {
             "bInfo": false,
             "scrollY": "500px",
             "bFilter": false,
-            "bSort" : false,
-            "select": true,
-            "rowReorder": true,
+            "bSort": false,
+            "rowReorder": true
         });
         $('#tblPlaylist tbody').on('click', 'tr', function () {
-            playItem(tblPlaylist.row(this).data());
+            updatePlayerItem(tblPlaylist.row(this).data());
         });
     }
 
-    var playItem = function (item) {
-        Vsrv.Player.setVideoSrc(item[1]);
+    var updatePlayerItem = function (item) {
+        setPlayerVideo(item[1]);
     }
 
     var addItem = function (name, path) {
@@ -35,39 +45,42 @@ Vsrv.Playlist = (function () {
         tblPlaylist.row.add([name, path]).draw(false);
         var rws = tblPlaylist.rows().data();
         if (rws.length === 1) {
-            Vsrv.Player.fileAdded();
+            setPlayerVideo(path);
         }
     }
 
-    var getItemPath = function(idxOffset) {
-        var rws = tblPlaylist.rows().data();
-        if((currIdx + idxOffset) < 0 || (currIdx + idxOffset) >= rws.length){
-            return null;
-        } else {
-            currIdx += idxOffset;
-            tblPlaylist.rows().every(function(idx, tableLoop, rowLoop){
-                if(idx == currIdx){
-                    $(this).toggleClass('row_selected');
-                }
-            });
-            return rws[currIdx][1];
-        }
+    var setPlayerVideo = function (path) {
+        currentVideo = path;
+        Vsrv.Player.setVideoSrc(path);
+        updatePlayingSelection();
     }
 
-    var setPlaying = function (path) {
+    var getCurrentVideoIdx = function () {
         var rws = tblPlaylist.rows().data();
         for (i in rws) {
-            if (rws[i][1] === path) {
-                var t = rws[i];
+            if (rws[i][1] === currentVideo) {
+                return parseInt(i);
             }
+        }
+        return -1;
+    }
+
+    var nextVideo = function () {
+        var nidx = getCurrentVideoIdx() + 1;
+        var rws = tblPlaylist.rows().data();
+        if (nidx < rws.length) {
+            setPlayerVideo(rws[nidx][1]);
+            return true;
+        } else {
+            console.log("Playlist finished");
+            return false;
         }
     }
 
     return {
         init: init,
         addItem: addItem,
-        getItemPath: getItemPath,
-        setPlaying: setPlaying
+        nextVideo: nextVideo
     };
 
 })();

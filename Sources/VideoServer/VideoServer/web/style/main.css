@@ -36,8 +36,19 @@
     cursor:pointer;
 }
 
-.plControl {
-    cursor:pointer;
-    width: 18%;
-    text-align:center;
+#plControls {
+    width: 100%;
+}
+
+#plControls td {
+    cursor: pointer;
+    text-align: center;
+}
+
+#plcPause {
+    display:none;
+}
+
+.rowSelected{
+    background-color: cadetblue !important;
 }

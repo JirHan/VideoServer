@@ -157,7 +157,8 @@ $.extend( RowReorder.prototype, {
 		var that = this;
 		var dt = this.s.dt;
 		var table = $( dt.table().node() );
-
+		var timeoutId = 0;
+		var event;
 		// Need to be able to calculate the row positions relative to the table
 		if ( table.css('position') === 'static' ) {
 			table.css( 'position', 'relative' );
@@ -170,14 +171,31 @@ $.extend( RowReorder.prototype, {
 		// Use `table().container()` rather than just the table node for IE8 -
 		// otherwise it only works once...
 		$(dt.table().container()).on( 'mousedown.rowReorder touchstart.rowReorder', this.c.selector, function (e) {
-			var tr = $(this).closest('tr');
 
-			// Double check that it is a DataTable row
-			if ( dt.row( tr ).any() ) {
-				that._mouseDown( e, tr );
-				return false;
-			}
+		    //event = e;
+		    //timeoutId = setTimeout(function () {
+		    //    timeoutId = 0;
+		    //    console.log("HOLD");
+
+		        var tr = $(this).closest('tr');
+
+		        // Double check that it is a DataTable row
+		        if (dt.row(tr).any()) {
+		            that._mouseDown(e, tr);
+		            return false;
+		        }
+		    //}, 1000);
+		    //return false;
+
 		} );
+
+		$(document).on('mouseup.rowReorder touchend.rowReorder', function (e) {
+		    if (timeoutId > 0) {
+		        clearTimeout(timeoutId);
+		        console.log("cancel");
+		        document.dispatchEvent(event);
+		    }
+		});
 
 		dt.on( 'destroy.rowReorder', function () {
 			$(dt.table().container()).off( '.rowReorder' );
