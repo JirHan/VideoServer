@@ -171,29 +171,22 @@ $.extend( RowReorder.prototype, {
 		// Use `table().container()` rather than just the table node for IE8 -
 		// otherwise it only works once...
 		$(dt.table().container()).on( 'mousedown.rowReorder touchstart.rowReorder', this.c.selector, function (e) {
-
-		    //event = e;
-		    //timeoutId = setTimeout(function () {
-		    //    timeoutId = 0;
-		    //    console.log("HOLD");
-
-		        var tr = $(this).closest('tr');
-
-		        // Double check that it is a DataTable row
-		        if (dt.row(tr).any()) {
-		            that._mouseDown(e, tr);
-		            return false;
+		    var tr = $(this).closest('tr');
+		    timeoutId = setTimeout(function () {
+		        if (timeoutId > 0) {
+		            timeoutId = 0;
+		            if (dt.row(tr).any()) {
+		                that._mouseDown(e, tr);
+		            }
 		        }
-		    //}, 1000);
-		    //return false;
-
+		    }, 500);
+		    return false;
 		} );
 
-		$(document).on('mouseup.rowReorder touchend.rowReorder', function (e) {
+		$(document).on('mouseup touchend', function (e) {
 		    if (timeoutId > 0) {
+		        timeoutId = 0;
 		        clearTimeout(timeoutId);
-		        console.log("cancel");
-		        document.dispatchEvent(event);
 		    }
 		});
 
