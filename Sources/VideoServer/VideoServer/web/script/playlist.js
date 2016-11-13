@@ -9,8 +9,11 @@ Vsrv.Playlist = (function () {
         $("#tblPlaylist tr").removeClass("rowSelected");
         var rws = tblPlaylist.rows().data();
         for (i in rws) {
-            if (rws[i][1] === currentVideo) {
-                $(tblPlaylist.row(i).node()).addClass("rowSelected");
+            var row = tblPlaylist.row(i);
+            var data = row.data();
+            if (data[2] === currentVideo) {
+                var node = row.node();
+                $(node).addClass("rowSelected");
                 return;
             }
         }
@@ -18,12 +21,18 @@ Vsrv.Playlist = (function () {
 
     var init = function () {
         tblPlaylist = $('#tblPlaylist').DataTable({
-            "bPaginate": false,
-            "bInfo": false,
-            "scrollY": "500px",
-            "bFilter": false,
-            "bSort": false,
-            "rowReorder": true
+            bPaginate: false,
+            bInfo: false,
+            scrollY: "500px",
+            bFilter: false,
+            rowReorder: {
+                selector: 'tr'
+            },
+            columnDefs: [
+                { targets: 0, visible: false },
+                { targets: 1, orderable: false },
+                { targets: 2, visible: false }
+            ]
         });
         $('#tblPlaylist tbody').on('click', 'tr', function () {
             updatePlayerItem(tblPlaylist.row(this).data());
@@ -31,20 +40,19 @@ Vsrv.Playlist = (function () {
     }
 
     var updatePlayerItem = function (item) {
-        setPlayerVideo(item[1]);
+        setPlayerVideo(item[2]);
     }
 
     var addItem = function (name, path) {
         var rws = tblPlaylist.rows().data();
         for (i in rws) {
-            if (rws[i][1] === path) {
+            if (rws[i][2] === path) {
                 console.log("Contained..");
                 return;
             }
         }
-        tblPlaylist.row.add([name, path]).draw(false);
-        var rws = tblPlaylist.rows().data();
-        if (rws.length === 1) {
+        tblPlaylist.row.add([rws.length, name, path]).draw(false);
+        if (rws.length === 0) {
             setPlayerVideo(path);
         }
     }
@@ -58,7 +66,7 @@ Vsrv.Playlist = (function () {
     var getCurrentVideoIdx = function () {
         var rws = tblPlaylist.rows().data();
         for (i in rws) {
-            if (rws[i][1] === currentVideo) {
+            if (rws[i][2] === currentVideo) {
                 return parseInt(i);
             }
         }
@@ -69,7 +77,7 @@ Vsrv.Playlist = (function () {
         var nidx = getCurrentVideoIdx() + 1;
         var rws = tblPlaylist.rows().data();
         if (nidx < rws.length) {
-            setPlayerVideo(rws[nidx][1]);
+            setPlayerVideo(rws[nidx][2]);
             return true;
         } else {
             console.log("Playlist finished");

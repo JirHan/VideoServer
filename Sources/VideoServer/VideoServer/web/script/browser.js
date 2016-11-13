@@ -22,21 +22,21 @@ Vsrv.Browser = (function () {
 
     var init = function () {
         tblBrowser = $('#tblBrowser').DataTable({
-            "bPaginate": false,
-            "bInfo" : false,
-            "ajax": {
-                "url": listUrl + getCurrentDir(),
-                "dataSrc": function (d)
+            bPaginate: false,
+            bInfo : false,
+            ajax: {
+                url: listUrl + getCurrentDir(),
+                dataSrc: function (d)
                 {
                     return d;
                 },
             },
-            "columns": [
-                { "data": "type" },
-                { "data": "name" }
+            columns: [
+                { data: "type" },
+                { data: "name" }
             ],
-            "scrollY": "500px",
-            "language": {
+            scrollY: "500px",
+            language: {
                 "emptyTable": "No Files"
             }
         });
