@@ -178,6 +178,8 @@ $.extend( RowReorder.prototype, {
 		            if (dt.row(tr).any()) {
 		                that._mouseDown(e, tr);
 		            }
+		            e.preventDefault();
+                    e.stop
 		        }
 		    }, 500);
 		    //return false;
@@ -187,7 +189,9 @@ $.extend( RowReorder.prototype, {
 		    if (timeoutId > 0) {
 		        timeoutId = 0;
 		        clearTimeout(timeoutId);
+		        return true;
 		    }
+		    return false;
 		});
 
 		dt.on( 'destroy.rowReorder', function () {

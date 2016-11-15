@@ -9,7 +9,8 @@ from cherrypy.lib.static import serve_file
 
 #contentRoot = "F:\\Fotky"
 #contentRoot = "E:\\mp4\\"
-contentRoot = "D:\Fun"
+#contentRoot = "D:\Fun"
+contentRoot = "C:\Fun"
 port = 8080
 
 class Static():
