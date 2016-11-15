@@ -180,7 +180,7 @@ $.extend( RowReorder.prototype, {
 		            }
 		        }
 		    }, 500);
-		    return false;
+		    //return false;
 		} );
 
 		$(document).on('mouseup touchend', function (e) {

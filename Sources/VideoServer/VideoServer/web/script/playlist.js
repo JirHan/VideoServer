@@ -73,6 +73,17 @@ Vsrv.Playlist = (function () {
         return -1;
     }
 
+    var prevVideo = function () {
+        var pidx = getCurrentVideoIdx() - 1;
+        var rws = tblPlaylist.rows().data();
+        if (pidx < 0) {
+            if(rws.length > 0)
+                setPlayerVideo(rws[0][2]);
+        } else {
+            setPlayerVideo(rws[pidx][2]);
+        }
+    }
+
     var nextVideo = function () {
         var nidx = getCurrentVideoIdx() + 1;
         var rws = tblPlaylist.rows().data();
@@ -88,7 +99,8 @@ Vsrv.Playlist = (function () {
     return {
         init: init,
         addItem: addItem,
-        nextVideo: nextVideo
+        nextVideo: nextVideo,
+        prevVideo: prevVideo
     };
 
 })();
