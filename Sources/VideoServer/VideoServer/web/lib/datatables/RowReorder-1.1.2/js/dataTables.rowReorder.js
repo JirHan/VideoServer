@@ -189,9 +189,9 @@ $.extend( RowReorder.prototype, {
 		    if (timeoutId > 0) {
 		        timeoutId = 0;
 		        clearTimeout(timeoutId);
-		        return true;
+		        //return true;
 		    }
-		    return false;
+		    //return false;
 		});
 
 		dt.on( 'destroy.rowReorder', function () {

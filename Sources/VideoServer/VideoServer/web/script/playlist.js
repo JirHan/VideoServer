@@ -23,14 +23,20 @@ Vsrv.Playlist = (function () {
         tblPlaylist = $('#tblPlaylist').DataTable({
             bPaginate: false,
             bInfo: false,
-            scrollY: "500px",
+            scrollY: "75vh",
             bFilter: false,
             rowReorder: {
                 selector: 'tr'
             },
             columnDefs: [
                 { targets: 0, visible: false },
-                { targets: 1, orderable: false },
+                {
+                    targets: 1,
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return "<span class='noselect' unselectable='on' onselectstart='return false;'>" + data + "</span>";
+                    },
+                },
                 { targets: 2, visible: false }
             ]
         });

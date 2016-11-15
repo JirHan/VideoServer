@@ -35,7 +35,7 @@ Vsrv.Browser = (function () {
                 { data: "type" },
                 { data: "name" }
             ],
-            scrollY: "500px",
+            scrollY: "75vh",
             language: {
                 "emptyTable": "No Files"
             }
