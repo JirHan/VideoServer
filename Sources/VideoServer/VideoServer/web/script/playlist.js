@@ -23,14 +23,20 @@ Vsrv.Playlist = (function () {
         tblPlaylist = $('#tblPlaylist').DataTable({
             bPaginate: false,
             bInfo: false,
-            scrollY: "500px",
+            scrollY: "75vh",
             bFilter: false,
             rowReorder: {
                 selector: 'tr'
             },
             columnDefs: [
                 { targets: 0, visible: false },
-                { targets: 1, orderable: false },
+                {
+                    targets: 1,
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return "<span class='noselect' unselectable='on' onselectstart='return false;'>" + data + "</span>";
+                    },
+                },
                 { targets: 2, visible: false }
             ]
         });
@@ -73,6 +79,17 @@ Vsrv.Playlist = (function () {
         return -1;
     }
 
+    var prevVideo = function () {
+        var pidx = getCurrentVideoIdx() - 1;
+        var rws = tblPlaylist.rows().data();
+        if (pidx < 0) {
+            if(rws.length > 0)
+                setPlayerVideo(rws[0][2]);
+        } else {
+            setPlayerVideo(rws[pidx][2]);
+        }
+    }
+
     var nextVideo = function () {
         var nidx = getCurrentVideoIdx() + 1;
         var rws = tblPlaylist.rows().data();
@@ -88,7 +105,8 @@ Vsrv.Playlist = (function () {
     return {
         init: init,
         addItem: addItem,
-        nextVideo: nextVideo
+        nextVideo: nextVideo,
+        prevVideo: prevVideo
     };
 
 })();

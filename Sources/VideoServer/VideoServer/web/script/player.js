@@ -48,6 +48,10 @@ Vsrv.Player = (function () {
         if (path != null) {
             $("#vidVideo").attr("src", contentUrl + path);
             console.log("src: " + path);
+            if (currStatus == Status.PLAYING)
+            {
+                play();
+            }
             return true;
         } else {
             return false;

@@ -21,12 +21,10 @@
     <script type="text/javascript" src="./script/player.js"></script>
 
     <script>
-
         $(document).ready(function () {
             Vsrv.Browser.init();
             Vsrv.Playlist.init();
         });
-
     </script>
 
 </head>
@@ -54,11 +52,10 @@
     <div id="playlist">
         <table id="plControls">
             <tr>
-                <td><i class='fa fa-fast-backward fa-lg plControl' onclick=''></i></td>
+                <td><i class='fa fa-fast-backward fa-lg plControl' onclick='Vsrv.Playlist.prevVideo()'></i></td>
                 <td><i class='fa fa-pause fa-lg plControl' id="plcPause" onclick='Vsrv.Player.pause()'></i></td>
                 <td><i class='fa fa-play fa-lg plControl' id="plcPlay" onclick='Vsrv.Player.play()'></i></td>
-                <td><i class='fa fa-eject fa-lg plControl' onclick=''></i></td>
-                <td><i class='fa fa-fast-forward fa-lg plControl' onclick=''></i></td>
+                <td><i class='fa fa-fast-forward fa-lg plControl' onclick='Vsrv.Playlist.nextVideo()'></i></td>
             </tr>
         </table>
         <table id="tblPlaylist" class="display" cellspacing="0">
