@@ -43,6 +43,10 @@
     width: 100%;
 }
 
+.noCursor {
+    cursor:none !important;
+}
+
 #plControls td {
     cursor: pointer;
     text-align: center;

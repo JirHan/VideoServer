@@ -22,7 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="structured.py">
+    <Compile Include="fsUtils.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="videoServer.py" />
@@ -48,7 +48,7 @@
     <Folder Include="web\style\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="web\index.html" />
+    <Content Include="web\idx.html" />
     <Content Include="web\lib\awesome\css\font-awesome.css" />
     <Content Include="web\lib\awesome\css\font-awesome.min.css" />
     <Content Include="web\lib\awesome\fonts\fontawesome-webfont.eot" />
@@ -124,6 +124,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="web\script\rest.js" />
+    <Content Include="web\script\utils.js" />
     <Content Include="web\style\main.css">
       <SubType>Code</SubType>
     </Content>

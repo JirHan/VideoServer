@@ -3,7 +3,7 @@ window.Vsrv = window.Vsrv || {};
 Vsrv.Browser = (function () {
     
     var CurrDirChain = [];
-    var listUrl = "list?path=";
+    var listUrl = "list?pwd={0}&path=".format(getURLParam("secret"));
     var tblBrowser;
 
     var updateHash = function () {

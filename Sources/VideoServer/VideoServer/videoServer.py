@@ -7,16 +7,23 @@ import sys
 import mimetypes
 from cherrypy.lib.static import serve_file
 
+import fsUtils
+
 #contentRoot = "F:\\Fotky"
 #contentRoot = "E:\\mp4\\"
 #contentRoot = "D:\Fun"
 contentRoot = "C:\Fun"
 port = 8080
+SECRET = "pass"
 
 class Static():
     exposed = True
 
-    def GET(self, path):
+    def GET(self, path, pwd = None):
+        if(pwd != SECRET):
+             cherrypy.response.status = 403
+             return
+
         path = os.path.join(contentRoot, path)
         print(path)
         
@@ -26,31 +33,23 @@ class Static():
         return serve_file(path)
 
 class Web():
-    pass
+    @cherrypy.expose
+    def index(self, pwd = None):
+        if(pwd != SECRET):
+            cherrypy.response.status = 403
+            return
 
-class ListItem:
-    def __init__(self, name, type):
-        self.name = name
-        self.type = type
+        return serve_file(__mod_dir__ + "/web/idx.html")
 
 class List():
     exposed = True
 
-    def GET(self, path = None, **params):
-        ret = []
-        print(path)
-        if path is not None:
-            curr = os.path.join(contentRoot, path)
-        else:
-            curr = contentRoot
+    def GET(self, path = None, _ = None, pwd = None):
+        if(pwd != SECRET):
+            cherrypy.response.status = 403
+            return
 
-        if(os.path.isdir(curr)):
-            for fname in os.listdir(curr):
-                if os.path.isdir(os.path.join(curr, fname)):
-                    ret.append(ListItem(fname, "D"))
-                elif fname.endswith(".mp4"):
-                    ret.append(ListItem(fname, "F"))
-        
+        ret = fsUtils.list(contentRoot, path)
         return json.dumps(ret, ensure_ascii=False).encode('utf8')
 
 class VideoServer:

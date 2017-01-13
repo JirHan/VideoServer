@@ -8,39 +8,55 @@ Vsrv.Player = (function () {
         PLAYING: 2,
         PAUSED: 3
     };
-    //var contentUrl = "stream?path=";
-    var contentUrl = "static/";
-    var contentUrl = "static?path=";
+
+    var contentUrl = "static?pwd={0}&path=".format(getURLParam("secret"));
     var currStatus = Status.NONE;
+    var idleMouseTimer;
+
+    var setStatus = function (status) {
+        currStatus = status;
+    }
+
+    var init = function () {
+        $("body").mousemove(function (ev) {
+            $("body").removeClass('noCursor');
+            clearTimeout(idleMouseTimer);
+            if (currStatus == Status.PLAYING) {
+                idleMouseTimer = setTimeout(function () {
+                    $("body").addClass('noCursor');
+                }, 3000);
+            }
+        });
+    }
 
     var videoEnded = function () {
         if (Vsrv.Playlist.nextVideo()) {
-            currStatus = Status.PLAYING;
+            setStatus(Status.PLAYING);
             play();
         } else {
-            currStatus = Status.PAUSED;
+            setStatus(Status.PAUSED);
         }
     };
 
     var videoStarted = function () {
-        currStatus = Status.PLAYING;
+        setStatus(Status.PLAYING);
         $("#plcPause").show();
         $("#plcPlay").hide();
     };
 
     var videoPaused = function () {
-        currStatus = Status.PAUSED;
+        setStatus(Status.PAUSED);
         $("#plcPause").hide();
         $("#plcPlay").show();
     }
 
     var play = function () {
-        currStatus = Status.PLAYING;
+        setStatus(Status.PLAYING);
         document.getElementById("vidVideo").play();
     }
 
     var pause = function () {
-        currStatus = Status.PAUSED;
+        setStatus(Status.PAUSED);
         document.getElementById("vidVideo").pause();
     }
 
@@ -64,7 +80,8 @@ Vsrv.Player = (function () {
         videoStarted: videoStarted,
         videoPaused: videoPaused,
         videoEnded: videoEnded,
-        setVideoSrc: setVideoSrc
+        setVideoSrc: setVideoSrc,
+        init: init
     };
 
 })();
