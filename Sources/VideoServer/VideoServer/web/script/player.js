@@ -9,7 +9,7 @@ Vsrv.Player = (function () {
         PAUSED: 3
     };
 
-    var contentUrl = "static?pwd={0}&path=".format(getURLParam("secret"));
+    var contentUrl = "static?pwd={0}&path=".format(getURLParam("pwd"));
     var currStatus = Status.NONE;
     var idleMouseTimer;
 
