@@ -8,23 +8,23 @@ import mimetypes
 from cherrypy.lib.static import serve_file
 
 import fsUtils
+import config
 
-#contentRoot = "F:\\Fotky"
-#contentRoot = "E:\\mp4\\"
-#contentRoot = "D:\Fun"
-contentRoot = "C:\Fun"
-port = 8080
-SECRET = "pass"
+class Settings:
+    SECRET = "pass"
+    contentRoot = ""
+    address = "0.0.0.0"
+    port = 8080
 
 class Static():
     exposed = True
 
     def GET(self, path, pwd = None):
-        if(pwd != SECRET):
+        if(pwd != Settings.SECRET):
              cherrypy.response.status = 403
              return
 
-        path = os.path.join(contentRoot, path)
+        path = os.path.join(Settings.contentRoot, path)
         print(path)
         
         if not os.path.exists(path):
@@ -35,7 +35,7 @@ class Static():
 class Web():
     @cherrypy.expose
     def index(self, pwd = None):
-        if(pwd != SECRET):
+        if(pwd != Settings.SECRET):
             cherrypy.response.status = 403
             return
 
@@ -45,11 +45,11 @@ class List():
     exposed = True
 
     def GET(self, path = None, _ = None, pwd = None):
-        if(pwd != SECRET):
+        if(pwd != Settings.SECRET):
             cherrypy.response.status = 403
             return
 
-        ret = fsUtils.list(contentRoot, path)
+        ret = fsUtils.list(Settings.contentRoot, path)
         return json.dumps(ret, ensure_ascii=False).encode('utf8')
 
 class VideoServer:
@@ -65,8 +65,8 @@ class VideoServer:
         cherrypy.tools.cors = cherrypy.Tool('before_finalize', VideoServer.setCors)
 
         cherrypy.config.update({
-            'server.socket_host': '0.0.0.0',
-            'server.socket_port': port, 
+            'server.socket_host': Settings.address,
+            'server.socket_port': Settings.port, 
 
             'engine.autoreload.on': False,
 
@@ -106,13 +106,12 @@ class VideoServer:
 
 
 if __name__ == '__main__':
-    if len(sys.argv) >= 2:
-        contentRoot = sys.argv[1]
-    if len(sys.argv) >= 3:
-        port = int(sys.argv[2])
+    cfg = config.getConfig()
+    Settings.address = cfg["server"]["address"]
+    Settings.port = cfg["server"]["port"] 
+    Settings.contentRoot = cfg["video"]["path"] 
 
-    print("Serving videos from {0} on port {1}".format(contentRoot, port))
-
+    print("Serving videos from {0} on {1}:{2}".format(Settings.contentRoot, Settings.address, Settings.port))
     VideoServer.start()
     
 

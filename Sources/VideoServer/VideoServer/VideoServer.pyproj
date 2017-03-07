@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="config.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="fsUtils.py">
       <SubType>Code</SubType>
     </Compile>
@@ -48,6 +51,7 @@
     <Folder Include="web\style\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="config.json" />
     <Content Include="web\idx.html" />
     <Content Include="web\lib\awesome\css\font-awesome.css" />
     <Content Include="web\lib\awesome\css\font-awesome.min.css" />
