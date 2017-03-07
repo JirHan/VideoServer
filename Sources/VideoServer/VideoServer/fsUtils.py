@@ -4,6 +4,7 @@ class ListItem:
     def __init__(self, name, type):
         self.name = name
         self.type = type
+        #print("{0} : {1}".format(name, type))
 
 def list(root, path):
     ret = []

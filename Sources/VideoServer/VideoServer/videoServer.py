@@ -50,7 +50,8 @@ class List():
             return
 
         ret = fsUtils.list(Settings.contentRoot, path)
-        return json.dumps(ret, ensure_ascii=False).encode('utf8')
+        jStr = json.dumps(ret, ensure_ascii=False).encode('utf8')
+        return jStr
 
 class VideoServer:
 
