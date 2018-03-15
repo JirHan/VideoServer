@@ -11,8 +11,9 @@ Vsrv.Browser = (function () {
     }
 
     var processHash = function () {
-        if (window.location.hash != "") {
-            CurrDirChain = JSON.parse(window.location.hash.substring(1));
+		var hash = decodeURIComponent(window.location.hash);
+        if (hash != "") {
+            CurrDirChain = JSON.parse(hash.substring(1));
         } else {
             CurrDirChain = [];
         }
