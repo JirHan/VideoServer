@@ -25,6 +25,7 @@ Vsrv.Playlist = (function () {
             bInfo: false,
             scrollY: "75vh",
             bFilter: false,
+            processing: true,
             rowReorder: {
                 selector: 'tr'
             },

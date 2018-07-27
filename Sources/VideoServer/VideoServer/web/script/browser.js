@@ -2,6 +2,7 @@ window.Vsrv = window.Vsrv || {};
 
 Vsrv.Browser = (function () {
     
+    var clickDisabled = false;
     var CurrDirChain = [];
     var listUrl = "list?pwd={0}&path=".format(getURLParam("pwd"));
     var tblBrowser;
@@ -24,6 +25,7 @@ Vsrv.Browser = (function () {
     var init = function () {
         tblBrowser = $('#tblBrowser').DataTable({
             bPaginate: false,
+            processing: true,
             bInfo : false,
             ajax: {
                 url: listUrl + getCurrentDir(),
@@ -42,7 +44,8 @@ Vsrv.Browser = (function () {
             }
         });
         $('#tblBrowser tbody').on('click', 'td', function () {
-            if(this.cellIndex === 1){
+            if (!clickDisabled && this.cellIndex === 1) {
+                handleMulticlick();
                 var item = tblBrowser.row(this).data();
                 itemClick(item.type, item.name);
             }
@@ -52,6 +55,11 @@ Vsrv.Browser = (function () {
             processHash();
         };
         processHash();
+    }
+
+    var handleMulticlick = function(){
+        clickDisabled = true;
+        setTimeout(function () { clickDisabled = false; }, 300);
     }
 
     var folderUp = function () {
