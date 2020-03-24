@@ -2,7 +2,8 @@ import os
 __mod_dir__ = os.path.abspath(os.path.dirname(__file__))
 
 import cherrypy
-import ujson as json
+#import ujson as json
+import json
 import sys
 import mimetypes
 from cherrypy.lib.static import serve_file
@@ -50,7 +51,7 @@ class List():
             return
 
         ret = fsUtils.list(Settings.contentRoot, path)
-        jStr = json.dumps(ret, ensure_ascii=False).encode('utf8')
+        jStr = json.dumps(ret, ensure_ascii=False, default = lambda x: x.__dict__).encode('utf8')
         return jStr
 
 class VideoServer:
